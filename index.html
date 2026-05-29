@@ -627,13 +627,14 @@
     btn.textContent = '✅ ¡Confirmado!';
     btn.disabled = true;
     btn.style.opacity = '0.8';
-    crearConfeti();
-    // Número de WhatsApp (formato internacional sin + ni espacios)
-    const numeroWA = '573107105976'; // 👈 Cambia este número por el tuyo
+
+    const numeroWA = '573107105976';
     const mensaje = encodeURIComponent('Hola! Confirmo mi asistencia al cumpleaños de Salomón 🎉👑');
-    setTimeout(() => {
-      window.open(`https://wa.me/${numeroWA}?text=${mensaje}`, '_blank');
-    }, 1200);
+    // Abrir WhatsApp de inmediato (requerido por Safari iOS — no puede estar dentro de setTimeout)
+    window.open(`https://wa.me/${numeroWA}?text=${mensaje}`, '_blank');
+
+    // Confeti después
+    setTimeout(crearConfeti, 300);
   }
 
   function cerrarOverlay() {
