@@ -642,6 +642,9 @@
   }
 
 
+  // Confeti al abrir la invitación
+  window.addEventListener('load', () => setTimeout(crearConfeti, 800));
+
   document.querySelector('.card').addEventListener('mousemove', (e) => {
     if (Math.random() > 0.93) {
       const spark = document.createElement('div');
