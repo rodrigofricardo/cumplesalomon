@@ -152,13 +152,12 @@
   .title {
     font-family: 'Cinzel Decorative', cursive;
     font-weight: 900;
-    font-size: 1.5rem;
+    font-size: min(5.5vw, 1.5rem);
     line-height: 1.35;
     white-space: nowrap;
     display: block;
     width: 100%;
     text-align: center;
-    transform-origin: center top;
     background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold-bright) 40%, var(--gold) 70%, var(--gold-dark) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -642,44 +641,6 @@
   }
 
 
-  // Auto-scale title to always fit — measures off-screen clone to avoid animation/opacity issues
-  function fitTitle() {
-    const title = document.querySelector('.title');
-    const header = document.querySelector('.header');
-    if (!title || !header) return;
-
-    // Clone off-screen to get true natural width regardless of animation state
-    const clone = title.cloneNode(true);
-    clone.style.cssText = `
-      position: fixed; top: -9999px; left: -9999px;
-      font-size: 1.5rem;
-      white-space: nowrap;
-      transform: none;
-      opacity: 1;
-      visibility: visible;
-    `;
-    document.body.appendChild(clone);
-    const naturalWidth = clone.scrollWidth;
-    document.body.removeChild(clone);
-
-    const headerStyle = window.getComputedStyle(header);
-    const paddingH = parseFloat(headerStyle.paddingLeft) + parseFloat(headerStyle.paddingRight);
-    const available = header.clientWidth - paddingH;
-
-    title.style.transform = 'scaleX(1)';
-    title.style.fontSize = '1.5rem';
-    if (naturalWidth > available) {
-      const scale = (available / naturalWidth) * 0.96;
-      title.style.transform = `scaleX(${scale})`;
-    }
-  }
-
-  if (document.fonts) {
-    document.fonts.ready.then(fitTitle);
-  } else {
-    window.addEventListener('load', fitTitle);
-  }
-  window.addEventListener('resize', fitTitle);
   document.querySelector('.card').addEventListener('mousemove', (e) => {
     if (Math.random() > 0.93) {
       const spark = document.createElement('div');
